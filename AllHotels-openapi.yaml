@@ -1,0 +1,149 @@
+openapi: 3.0.1
+info:
+  title: Hotel, Hotel2 Api Documentation
+  description: Open API generated from Akwatype for service Hotel, Hotel2 generated
+    on 2022-01-18 08:39:58
+  version: 0.0.1
+externalDocs:
+  url: ""
+tags:
+- name: Hotel-Hotels
+- name: Hotel2-Hotels2
+paths:
+  /hotel/{id}:
+    get:
+      tags:
+      - Hotel-Hotels
+      operationId: Hotel-Hotels-hotel
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: HotelStandardDTO
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HotelStandardDTO'
+        "201":
+          description: HotelStandardDTO
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HotelStandardDTO'
+  /hotel:
+    get:
+      tags:
+      - Hotel-Hotels
+      operationId: Hotel-Hotels-hotels
+      parameters:
+      - name: h1
+        in: header
+        schema:
+          type: string
+      - name: h2
+        in: header
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      - name: nom
+        in: query
+        schema:
+          type: string
+      - name: categorie
+        in: query
+        schema:
+          type: string
+      - name: ville
+        in: query
+        schema:
+          type: string
+      - name: pays
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: HotelSummaryDTO
+          headers:
+            offset:
+              schema:
+                type: integer
+                format: int32
+            limit:
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HotelSummaryDTO'
+  /hotel2:
+    get:
+      tags:
+      - Hotel2-Hotels2
+      operationId: Hotel2-Hotels2-hotel2
+      responses:
+        "200":
+          description: HotelStandardDTO
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HotelStandardDTO'
+components:
+  schemas:
+    HotelStandardDTO:
+      type: object
+      properties:
+        nom:
+          type: string
+        categorie:
+          type: string
+        rue:
+          type: string
+        complementAdresse:
+          type: string
+        ville:
+          type: string
+        pays:
+          type: string
+        chambre:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/RoomDTO'
+    HotelSummaryDTO:
+      type: object
+      properties:
+        nom:
+          type: string
+        categorie:
+          type: string
+        ville:
+          type: string
+        pays:
+          type: string
+    PaginationDTO:
+      type: object
+      properties:
+        offset:
+          type: integer
+        limit:
+          type: integer
+    RoomDTO:
+      type: object
+      properties:
+        numero:
+          type: string
+        nbrPlaces:
+          type: integer
+        etage:
+          type: integer
+        categorie:
+          type: string
