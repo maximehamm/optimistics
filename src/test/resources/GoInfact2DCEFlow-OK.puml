@@ -1,0 +1,58 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+GoInfact_Front -> GoInfact : demande d'envoi à DCE
+
+GoInfact      -> GoInfact : Charge et encode document #1
+GoInfact      -> GoInfact : Charge et encode document #2
+GoInfact      -> GoInfact : Charge et encode document #3
+GoInfact      -> GoInfact : Aggrège les 3 documents en JSON
+GoInfact      -> DCE_MULTI: Envoi des 3 documents
+
+DCE_MULTI     -> DCE_MONO : Appel unitaire doc #1
+DCE_MONO      -> DCE_CFG: Controle de référentiels
+DCE_MONO      -> DCE_CFG: Controle de référentiels
+DCE_MONO      -> DCE_CFG: Controle de référentiels
+DCE_MONO      -> GED: Stockage en GED
+DCE_MONO      <-- GED: Réponse OK
+DCE_MULTI     <-- DCE_MONO: Réponse OK
+
+DCE_MULTI     -> DCE_MONO : Appel unitaire doc #2
+DCE_MONO      -> DCE_CFG: Controle de référentiels
+DCE_MONO      -> DCE_CFG: Controle de référentiels
+DCE_MONO      -> DCE_CFG: Controle de référentiels
+DCE_MONO      -> GED: Stockage en GED
+DCE_MONO      <-- GED: Réponse OK
+DCE_MULTI     <-- DCE_MONO: Réponse OK
+
+DCE_MULTI     -> DCE_MONO : Appel unitaire doc #3
+DCE_MONO      -> DCE_CFG: Controle de référentiels
+DCE_MONO      -> DCE_CFG: Controle de référentiels
+DCE_MONO      -> DCE_CFG: Controle de référentiels
+DCE_MONO      -> GED: Stockage en GED
+DCE_MONO      <-- GED: Réponse OK
+DCE_MULTI     <-- DCE_MONO: Réponse OK
+
+GoInfact      <-- DCE_MULTI: Réponse OK
+GoInfact_Front <-- GoInfact: Réponse OK
+
+
+
+
+'https://deepu.js.org/svg-seq-diagram/Reference_Guide.pdf
+skinparam object {
+    BackgroundColor light
+    BackgroundColor<<NEW>> #FEFEDE
+    ArrowColor Gray
+    BorderColor LightGray
+}
+
+skinparam note {
+    BackgroundColor light
+    BorderColor light
+    FontSize 10
+}
+
+@enduml

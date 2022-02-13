@@ -1,0 +1,48 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+GoInfact_Front -> GoInfact : demande d'envoi à DCE
+
+GoInfact      -> GoInfact : Charge et encode document #1
+GoInfact      -> DCE_MONO: Demande de contrôle avant envoi
+DCE_MONO      -> DCE_CFG: Controle de référentiels
+DCE_MONO      -> GED: Demande de contrôle avant envoi GED
+DCE_MONO      <-- GED: Réponse OK
+GoInfact      <-- DCE_MONO: Réponse OK
+
+GoInfact      -> GoInfact : Charge et encode document #2
+GoInfact      -> DCE_MONO: Demande de contrôle avant envoi
+DCE_MONO      -> DCE_CFG: Controle de référentiels
+DCE_MONO      -> GED: Demande de contrôle avant envoi GED
+DCE_MONO      <-- GED: Réponse OK
+GoInfact      <-- DCE_MONO: Réponse OK
+
+GoInfact      -> GoInfact : Charge et encode document #3
+GoInfact      -> DCE_MONO: Demande de contrôle avant envoi
+DCE_MONO      -> DCE_CFG: Controle de référentiels
+DCE_MONO      -> GED: Demande de contrôle avant envoi GED
+autonumber resume "<font color=red><b>"
+DCE_MONO      <-[#red] GED: Réponse contrôle KO
+GoInfact      <-[#red] DCE_MONO: Réponse contrôle KO
+
+GoInfact_Front  <-[#red] GoInfact: Réponse KO
+
+
+
+'https://deepu.js.org/svg-seq-diagram/Reference_Guide.pdf
+skinparam object {
+    BackgroundColor light
+    BackgroundColor<<NEW>> #FEFEDE
+    ArrowColor Gray
+    BorderColor LightGray
+}
+
+skinparam note {
+    BackgroundColor light
+    BorderColor light
+    FontSize 10
+}
+
+@enduml
